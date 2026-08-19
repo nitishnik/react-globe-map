@@ -41,7 +41,7 @@ export default function HomePage() {
       </header>
 
       <div className="mx-auto w-full max-w-[1180px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <section className="mb-12 grid gap-8 lg:grid-cols-[1.25fr_.75fr] lg:items-end">
+        {/* <section className="mb-12 grid gap-8 lg:grid-cols-[1.25fr_.75fr] lg:items-end">
           <div>
             <p className="font-[var(--hm-sans)] text-xs font-bold tracking-[0.17em] text-[var(--hm-red)] uppercase">
               Destination discovery
@@ -62,11 +62,11 @@ export default function HomePage() {
               Explore recommendations <ArrowDown size={16} aria-hidden />
             </a>
           </div>
-        </section>
+        </section> */}
 
         <HomepageExplorer />
 
-        <section
+        {/* <section
           aria-labelledby="how-title"
           className="mt-16 border-t border-[var(--hm-hair)] pt-10 sm:mt-20"
         >
@@ -100,7 +100,7 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-        </section>
+        </section> */}
 
         <noscript>
           <section className="mt-10">

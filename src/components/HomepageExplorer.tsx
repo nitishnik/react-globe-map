@@ -17,17 +17,17 @@ export function HomepageExplorer() {
           <p className="font-[var(--hm-sans)] text-[11px] font-semibold tracking-[0.16em] text-[var(--hm-ink3)] uppercase">
             Travel preferences
           </p>
-          <h2
+          {/* <h2
             id="discovery-title"
             className="mt-1 max-w-xl font-[var(--hm-disp)] text-3xl leading-tight text-[var(--hm-ink)] sm:text-4xl"
           >
             Start with what matters to you.
-          </h2>
+          </h2> */}
         </div>
-        <p className="max-w-sm font-[var(--hm-sans)] text-sm leading-6 text-[var(--hm-ink2)]">
+        {/* <p className="max-w-sm font-[var(--hm-sans)] text-sm leading-6 text-[var(--hm-ink2)]">
           Every place stays visible. What changes is our recommendation—and
           the trade-off we ask you to consider.
-        </p>
+        </p> */}
       </div>
 
       <PreferenceBar aud={map.aud} onChange={map.setAud} />
