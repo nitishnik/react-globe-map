@@ -317,35 +317,18 @@ export function MapboxRecommendationMap(
       ) : null}
 
       {token && !error ? (
-        <>
-          <MapChrome
-            level={props.level}
-            countryId={props.countryId}
-            cityId={props.cityId}
-            onWorld={props.onWorld}
-            onCountry={props.onBackCountry}
-            onCity={props.onBackCity}
-            onZoomIn={props.onZoomIn}
-            onZoomOut={props.onZoomOut}
-          />
-          <div className="absolute right-3 bottom-8 z-50 flex rounded-full border border-[var(--hm-hair)] bg-white/94 p-1 font-[var(--hm-sans)] text-[10px] font-bold text-[var(--hm-ink2)] shadow-[0_4px_14px_rgba(16,22,32,0.12)] backdrop-blur-sm sm:right-4">
-            {(['flat', 'globe'] as const).map((mode) => (
-              <button
-                key={mode}
-                type="button"
-                aria-pressed={projectionMode === mode}
-                onClick={() => setProjectionMode(mode)}
-                className={`min-h-9 rounded-full px-3 transition ${
-                  projectionMode === mode
-                    ? 'bg-[var(--hm-navy)] text-white'
-                    : 'hover:bg-[var(--hm-wash)]'
-                }`}
-              >
-                {mode === 'flat' ? 'Flat' : 'Globe'}
-              </button>
-            ))}
-          </div>
-        </>
+        <MapChrome
+          level={props.level}
+          countryId={props.countryId}
+          cityId={props.cityId}
+          projectionMode={projectionMode}
+          onWorld={props.onWorld}
+          onCountry={props.onBackCountry}
+          onCity={props.onBackCity}
+          onZoomIn={props.onZoomIn}
+          onZoomOut={props.onZoomOut}
+          onProjection={setProjectionMode}
+        />
       ) : null}
 
       {!token ? (

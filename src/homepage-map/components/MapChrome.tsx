@@ -7,11 +7,13 @@ interface MapChromeProps {
   level: MapLevel
   countryId: string | null
   cityId: string | null
+  projectionMode: 'flat' | 'globe'
   onWorld: () => void
   onCountry: () => void
   onCity: () => void
   onZoomIn: () => void
   onZoomOut: () => void
+  onProjection: (mode: 'flat' | 'globe') => void
 }
 
 function Crumb({
@@ -43,11 +45,13 @@ export function MapChrome({
   level,
   countryId,
   cityId,
+  projectionMode,
   onWorld,
   onCountry,
   onCity,
   onZoomIn,
   onZoomOut,
+  onProjection,
 }: MapChromeProps) {
   const country = countryId ? destinationById(countryId) : null
   const city = cityId ? CITIES[cityId] : null
@@ -101,6 +105,25 @@ export function MapChrome({
           className="flex size-11 items-center justify-center rounded-xl border border-[var(--hm-hair)] bg-white text-lg font-medium text-[var(--hm-ink)] shadow-[0_4px_14px_rgba(16,22,32,0.12)] transition hover:bg-[var(--hm-wash)] disabled:cursor-default disabled:opacity-40"
         >
           −
+        </button>
+        <button
+          type="button"
+          aria-label={
+            projectionMode === 'globe'
+              ? 'Switch to flat map'
+              : 'Switch to globe'
+          }
+          aria-pressed={projectionMode === 'globe'}
+          onClick={() =>
+            onProjection(projectionMode === 'globe' ? 'flat' : 'globe')
+          }
+          className={`flex size-11 items-center justify-center rounded-xl border font-[var(--hm-sans)] text-[9px] font-bold tracking-wide uppercase shadow-[0_4px_14px_rgba(16,22,32,0.12)] transition ${
+            projectionMode === 'globe'
+              ? 'border-[var(--hm-navy)] bg-[var(--hm-navy)] text-white'
+              : 'border-[var(--hm-hair)] bg-white text-[var(--hm-ink2)] hover:bg-[var(--hm-wash)]'
+          }`}
+        >
+          Globe
         </button>
       </div>
     </>
