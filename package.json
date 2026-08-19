@@ -1,0 +1,33 @@
+{
+  "name": "mapbox-homepage",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "lucide-react": "^1.32.0",
+    "mapbox-gl": "^3.28.1",
+    "next": "^16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-specification": "^1.0.5",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2"
+  }
+}
