@@ -66,7 +66,7 @@ export function PillFace({
   const countVisible = showCount && typeof count === 'number' && count > 0
 
   return (
-    <span className="inline-flex flex-col items-center">
+    <span className="pointer-events-none inline-flex flex-col items-center">
       {showLabel ? (
         <span
           className={`mb-1 inline-flex max-w-[160px] items-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 py-1 font-[var(--hm-sans)] text-[12px] font-semibold shadow-[0_6px_18px_rgba(16,22,32,0.16)] ${

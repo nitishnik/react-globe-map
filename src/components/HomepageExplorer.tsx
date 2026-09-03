@@ -4,7 +4,7 @@ import { FlashToast } from '@/homepage-map/components/FlashToast'
 import { Matchline } from '@/homepage-map/components/Matchline'
 import { PreferenceBar } from '@/homepage-map/components/PreferenceBar'
 import { RankedPanel } from '@/homepage-map/components/RankedPanel'
-import { MapboxRecommendationMap } from '@/homepage-map/mapbox/MapboxRecommendationMap'
+import { RecommendationMapSurface } from '@/homepage-map/mapbox/RecommendationMapSurface'
 import { useHomepageMap } from '@/homepage-map/useHomepageMap'
 
 export function HomepageExplorer() {
@@ -41,7 +41,7 @@ export function HomepageExplorer() {
         </div>
 
         <div className="relative h-[280px] w-full border-b border-[var(--hm-hair)] sm:h-[400px] lg:h-[480px]">
-          <MapboxRecommendationMap
+          <RecommendationMapSurface
             camera={map.camera}
             aud={map.aud}
             level={map.level}
@@ -79,7 +79,7 @@ export function HomepageExplorer() {
 
       <p className="font-[var(--hm-sans)] text-xs leading-5 text-[var(--hm-ink3)]">
         Prototype catalog: photo slots, review excerpts, prices, and booking
-        actions await production services. Mapbox attribution remains visible.
+        actions await production services.
       </p>
     </section>
   )

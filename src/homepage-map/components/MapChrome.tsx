@@ -7,13 +7,11 @@ interface MapChromeProps {
   level: MapLevel
   countryId: string | null
   cityId: string | null
-  projectionMode: 'flat' | 'globe'
   onWorld: () => void
   onCountry: () => void
   onCity: () => void
   onZoomIn: () => void
   onZoomOut: () => void
-  onProjection: (mode: 'flat' | 'globe') => void
 }
 
 const controlClass =
@@ -48,13 +46,11 @@ export function MapChrome({
   level,
   countryId,
   cityId,
-  projectionMode,
   onWorld,
   onCountry,
   onCity,
   onZoomIn,
   onZoomOut,
-  onProjection,
 }: MapChromeProps) {
   const country = countryId ? destinationById(countryId) : null
   const city = cityId ? CITIES[cityId] : null
@@ -108,25 +104,6 @@ export function MapChrome({
           className={`${controlClass} disabled:cursor-default disabled:opacity-40`}
         >
           −
-        </button>
-        <button
-          type="button"
-          aria-label={
-            projectionMode === 'globe'
-              ? 'Switch to flat map'
-              : 'Switch to globe'
-          }
-          aria-pressed={projectionMode === 'globe'}
-          onClick={() =>
-            onProjection(projectionMode === 'globe' ? 'flat' : 'globe')
-          }
-          className={`flex size-11 items-center justify-center rounded-full border font-[var(--hm-sans)] text-[9px] font-bold tracking-wide uppercase shadow-[0_6px_18px_rgba(16,22,32,0.14)] transition ${
-            projectionMode === 'globe'
-              ? 'border-[var(--hm-red)] bg-[var(--hm-red)] text-white'
-              : 'border-white/80 bg-white/95 text-[var(--hm-ink2)] hover:bg-white'
-          }`}
-        >
-          Globe
         </button>
       </div>
     </>

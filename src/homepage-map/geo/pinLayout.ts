@@ -142,7 +142,7 @@ export function layoutPins({
     if (!stillOverlaps()) continue
     pin.showLabel = false
     clampPin(pin)
-    if (mode === 'world' || !stillOverlaps()) continue
+    if (mode === 'world' || mode === 'city' || !stillOverlaps()) continue
     pin.heldBack = true
   }
 
