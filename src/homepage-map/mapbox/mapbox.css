@@ -12,7 +12,7 @@
 }
 
 .hm-mapbox .mapboxgl-canvas:focus-visible {
-  outline: 2px solid var(--hm-navy);
+  outline: 2px solid var(--hm-red);
   outline-offset: -2px;
 }
 
@@ -35,7 +35,12 @@
 
 .hm-mapbox .mapboxgl-ctrl-logo {
   margin: 0 0 5px 5px;
-  opacity: 0.82;
+  opacity: 0.9;
+  filter: brightness(1.15);
+}
+
+.hm-mapbox .mapboxgl-ctrl-attrib.mapboxgl-compact {
+  background: rgb(255 255 255 / 88%);
 }
 
 @media (prefers-reduced-motion: reduce) {

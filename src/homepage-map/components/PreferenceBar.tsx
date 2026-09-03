@@ -20,8 +20,8 @@ export function PreferenceBar({ aud, onChange }: PreferenceBarProps) {
             onClick={() => onChange(a.id)}
             className={`inline-flex h-11 shrink-0 items-center gap-2 rounded-full border px-3.5 font-[var(--hm-sans)] text-sm font-medium transition ${
               pressed
-                ? 'border-[var(--hm-navy)] bg-[var(--hm-navy)] text-white'
-                : 'border-[var(--hm-hair2)] bg-white text-[var(--hm-ink)] hover:border-[var(--hm-ink3)]'
+                ? 'border-[var(--hm-red)] bg-[var(--hm-red)] text-white shadow-[0_8px_20px_rgba(230,57,70,0.28)]'
+                : 'border-[var(--hm-hair2)] bg-[var(--hm-wash)] text-[var(--hm-ink)] hover:border-[var(--hm-ink3)] hover:bg-white'
             }`}
           >
             {a.label}
@@ -29,7 +29,7 @@ export function PreferenceBar({ aud, onChange }: PreferenceBarProps) {
               className={`rounded-full px-1.5 text-[11px] font-semibold ${
                 pressed
                   ? 'bg-white/20 text-white'
-                  : 'bg-[var(--hm-wash)] text-[var(--hm-ink2)]'
+                  : 'bg-white text-[var(--hm-ink2)]'
               }`}
             >
               {n}

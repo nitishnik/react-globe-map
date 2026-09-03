@@ -12,7 +12,7 @@ export default function NotFound() {
         </h1>
         <Link
           href="/"
-          className="mt-6 inline-flex min-h-11 items-center rounded-xl bg-[var(--hm-navy)] px-5 font-[var(--hm-sans)] text-sm font-semibold text-white no-underline"
+          className="mt-6 inline-flex min-h-11 items-center rounded-full bg-[var(--hm-red)] px-5 font-[var(--hm-sans)] text-sm font-semibold text-white no-underline"
         >
           Return to the discovery map
         </Link>

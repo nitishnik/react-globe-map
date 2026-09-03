@@ -18,7 +18,7 @@ export default function ErrorPage({
         <button
           type="button"
           onClick={reset}
-          className="mt-5 min-h-11 rounded-xl bg-[var(--hm-navy)] px-5 font-[var(--hm-sans)] text-sm font-semibold text-white"
+          className="mt-5 min-h-11 rounded-full bg-[var(--hm-red)] px-5 font-[var(--hm-sans)] text-sm font-semibold text-white"
         >
           Try again
         </button>

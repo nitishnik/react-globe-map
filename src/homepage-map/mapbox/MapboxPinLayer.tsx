@@ -37,7 +37,7 @@ export function MapboxPinLayer({
         pins,
         width,
         height,
-        padding: { top: 64, right: 62, bottom: 36, left: 14 },
+        padding: { top: 72, right: 62, bottom: 44, left: 14 },
         mode:
           level === 'world'
             ? 'world'
@@ -91,34 +91,6 @@ export function MapboxPinLayer({
       className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
       aria-label="Recommendation pins"
     >
-      <svg
-        className="pointer-events-none absolute inset-0 overflow-visible"
-        width="100%"
-        height="100%"
-        aria-hidden
-      >
-        {placed.map((item) => {
-          if (
-            item.heldBack ||
-            Math.hypot(item.x - item.anchorX, item.y - item.anchorY) < 18
-          ) {
-            return null
-          }
-          return (
-            <line
-              key={`${item.pin.key}-leader`}
-              x1={item.anchorX}
-              y1={item.anchorY}
-              x2={item.x}
-              y2={item.y}
-              stroke="var(--hm-hair2)"
-              strokeWidth="1"
-              strokeDasharray="2 3"
-            />
-          )
-        })}
-      </svg>
-
       {placed
         .filter((item) => !item.heldBack)
         .map(({ pin, x, y, showLabel, showCount }) => (
@@ -139,7 +111,7 @@ export function MapboxPinLayer({
         ))}
 
       {(level === 'city' || level === 'poi') && cityId ? (
-        <div className="absolute bottom-12 left-4 rounded-md border border-[var(--hm-hair)] bg-white/90 px-2 py-1.5 font-[var(--hm-sans)] text-[10px] font-semibold tracking-wide text-[var(--hm-ink2)] shadow-sm backdrop-blur-sm">
+        <div className="absolute bottom-12 left-4 rounded-full border border-white/80 bg-white/92 px-2.5 py-1.5 font-[var(--hm-sans)] text-[10px] font-semibold tracking-wide text-[var(--hm-ink2)] shadow-sm backdrop-blur-sm">
           <span
             className="mb-1 block border-x border-t border-[var(--hm-ink2)]"
             style={{ width: scaleWidth, height: 4 }}
@@ -151,7 +123,7 @@ export function MapboxPinLayer({
 
       {cityCentre ? (
         <span
-          className="absolute -translate-x-1/2 translate-y-3 font-[var(--hm-sans)] text-[10px] font-semibold tracking-wide text-[var(--hm-ink2)]"
+          className="absolute -translate-x-1/2 translate-y-3 rounded-full bg-white/88 px-2 py-0.5 font-[var(--hm-sans)] text-[10px] font-semibold tracking-wide text-[var(--hm-ink)] shadow-sm"
           style={{ left: cityCentre.x, top: cityCentre.y }}
         >
           {cityCentre.name}

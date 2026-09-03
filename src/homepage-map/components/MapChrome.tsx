@@ -16,6 +16,9 @@ interface MapChromeProps {
   onProjection: (mode: 'flat' | 'globe') => void
 }
 
+const controlClass =
+  'flex size-11 items-center justify-center rounded-full border border-white/80 bg-white/95 text-lg font-medium text-[var(--hm-ink)] shadow-[0_6px_18px_rgba(16,22,32,0.14)] transition hover:bg-white'
+
 function Crumb({
   label,
   active,
@@ -30,10 +33,10 @@ function Crumb({
       type="button"
       onClick={onClick}
       disabled={!onClick}
-      className={`inline-flex min-h-11 items-center rounded-full px-3 font-[var(--hm-sans)] text-[11px] font-semibold tracking-wide transition ${
+      className={`inline-flex min-h-11 items-center rounded-full px-3 font-[var(--hm-sans)] text-[11px] font-semibold tracking-wide shadow-[0_6px_16px_rgba(16,22,32,0.1)] transition ${
         active
-          ? 'bg-[var(--hm-navy)] text-white'
-          : 'border border-[var(--hm-hair2)] bg-white/95 text-[var(--hm-ink2)] hover:bg-white'
+          ? 'bg-[var(--hm-red)] text-white'
+          : 'border border-white/80 bg-white/95 text-[var(--hm-ink)] hover:bg-white'
       }`}
     >
       {label}
@@ -67,7 +70,7 @@ export function MapChrome({
           />
           {country && level !== 'world' && (
             <>
-              <ChevronRight className="size-3 text-[var(--hm-ink3)]" />
+              <ChevronRight className="size-3 text-white drop-shadow" />
               <Crumb
                 label={country.name}
                 active={level === 'country'}
@@ -77,7 +80,7 @@ export function MapChrome({
           )}
           {city && (level === 'city' || level === 'poi') && (
             <>
-              <ChevronRight className="size-3 text-[var(--hm-ink3)]" />
+              <ChevronRight className="size-3 text-white drop-shadow" />
               <Crumb
                 label={city.name}
                 active={level === 'city' || level === 'poi'}
@@ -93,7 +96,7 @@ export function MapChrome({
           type="button"
           aria-label="Zoom in"
           onClick={onZoomIn}
-          className="flex size-11 items-center justify-center rounded-xl border border-[var(--hm-hair)] bg-white text-lg font-medium text-[var(--hm-ink)] shadow-[0_4px_14px_rgba(16,22,32,0.12)] transition hover:bg-[var(--hm-wash)]"
+          className={controlClass}
         >
           +
         </button>
@@ -102,7 +105,7 @@ export function MapChrome({
           aria-label="Zoom out"
           onClick={onZoomOut}
           disabled={level === 'world'}
-          className="flex size-11 items-center justify-center rounded-xl border border-[var(--hm-hair)] bg-white text-lg font-medium text-[var(--hm-ink)] shadow-[0_4px_14px_rgba(16,22,32,0.12)] transition hover:bg-[var(--hm-wash)] disabled:cursor-default disabled:opacity-40"
+          className={`${controlClass} disabled:cursor-default disabled:opacity-40`}
         >
           −
         </button>
@@ -117,10 +120,10 @@ export function MapChrome({
           onClick={() =>
             onProjection(projectionMode === 'globe' ? 'flat' : 'globe')
           }
-          className={`flex size-11 items-center justify-center rounded-xl border font-[var(--hm-sans)] text-[9px] font-bold tracking-wide uppercase shadow-[0_4px_14px_rgba(16,22,32,0.12)] transition ${
+          className={`flex size-11 items-center justify-center rounded-full border font-[var(--hm-sans)] text-[9px] font-bold tracking-wide uppercase shadow-[0_6px_18px_rgba(16,22,32,0.14)] transition ${
             projectionMode === 'globe'
-              ? 'border-[var(--hm-navy)] bg-[var(--hm-navy)] text-white'
-              : 'border-[var(--hm-hair)] bg-white text-[var(--hm-ink2)] hover:bg-[var(--hm-wash)]'
+              ? 'border-[var(--hm-red)] bg-[var(--hm-red)] text-white'
+              : 'border-white/80 bg-white/95 text-[var(--hm-ink2)] hover:bg-white'
           }`}
         >
           Globe

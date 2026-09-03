@@ -14,7 +14,10 @@ export function HomepageExplorer() {
     <section aria-labelledby="discovery-title" className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-[var(--hm-sans)] text-[11px] font-semibold tracking-[0.16em] text-[var(--hm-ink3)] uppercase">
+          <p
+            id="discovery-title"
+            className="font-[var(--hm-sans)] text-[11px] font-semibold tracking-[0.16em] text-[var(--hm-ink3)] uppercase"
+          >
             Travel preferences
           </p>
           {/* <h2
@@ -37,7 +40,7 @@ export function HomepageExplorer() {
           <Matchline aud={map.aud} />
         </div>
 
-        <div className="relative h-[220px] w-full border-b border-[var(--hm-hair)] sm:h-[300px] lg:h-[350px]">
+        <div className="relative h-[280px] w-full border-b border-[var(--hm-hair)] sm:h-[400px] lg:h-[480px]">
           <MapboxRecommendationMap
             camera={map.camera}
             aud={map.aud}

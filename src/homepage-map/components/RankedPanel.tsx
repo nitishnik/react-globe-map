@@ -317,7 +317,7 @@ export function RankedPanel({
             </div>
             <button
               type="button"
-              className="mt-3 flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--hm-navy)] px-3 font-[var(--hm-sans)] text-sm font-semibold text-white transition hover:bg-[#143247]"
+              className="mt-3 flex min-h-11 w-full items-center justify-center rounded-full bg-[var(--hm-red)] px-3 font-[var(--hm-sans)] text-sm font-semibold text-white transition hover:bg-[var(--hm-red-dk)]"
             >
               Check dates · from €{p.price}
             </button>

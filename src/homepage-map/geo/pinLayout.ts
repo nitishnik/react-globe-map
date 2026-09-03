@@ -16,11 +16,11 @@ function clamp(value: number, min: number, max: number) {
 }
 
 function pillSize(pin: PlacedPin) {
-  if (!pin.showLabel) return { width: 44, height: 44 }
+  if (!pin.showLabel) return { width: 28, height: 44 }
   const countWidth = pin.showCount && pin.pin.count ? 24 : 0
   return {
-    width: Math.min(170, 38 + pin.pin.label.length * 6.7 + countWidth),
-    height: 44,
+    width: Math.min(170, 36 + pin.pin.label.length * 6.7 + countWidth),
+    height: 56,
   }
 }
 
@@ -124,7 +124,8 @@ export function layoutPins({
     placed.forEach(clampPin)
   }
 
-  if (mode === 'world') return placed
+  const collapseWorldLabels = mode === 'world' && width < 640
+  if (mode === 'world' && !collapseWorldLabels) return placed
 
   const visible = placed
     .filter((pin) => !pin.heldBack)
@@ -141,7 +142,7 @@ export function layoutPins({
     if (!stillOverlaps()) continue
     pin.showLabel = false
     clampPin(pin)
-    if (!stillOverlaps()) continue
+    if (mode === 'world' || !stillOverlaps()) continue
     pin.heldBack = true
   }
 

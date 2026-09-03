@@ -82,7 +82,7 @@ export default async function AttractionPage({
             </div>
             <button
               type="button"
-              className="mt-4 min-h-11 w-full rounded-xl bg-[var(--hm-navy)] px-4 font-[var(--hm-sans)] text-sm font-semibold text-white"
+              className="mt-4 min-h-11 w-full rounded-full bg-[var(--hm-red)] px-4 font-[var(--hm-sans)] text-sm font-semibold text-white"
             >
               Check dates · from €{product.price}
             </button>

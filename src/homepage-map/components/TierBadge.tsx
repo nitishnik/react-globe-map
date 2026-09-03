@@ -4,7 +4,7 @@ import { tierLabel } from '../ranking'
 const TIER_CLASS: Record<TierIndex, string> = {
   0: 'border border-[var(--hm-red)] bg-[var(--hm-red)] text-white',
   1: 'border border-[var(--hm-navy)] bg-white text-[var(--hm-navy)]',
-  2: 'border border-transparent bg-[#d8d0c4] text-[var(--hm-ink)]',
+  2: 'border border-transparent bg-[var(--hm-wash)] text-[var(--hm-ink)]',
   3: 'border border-dashed border-[var(--hm-ink3)] bg-white text-[var(--hm-ink)]',
 }
 
