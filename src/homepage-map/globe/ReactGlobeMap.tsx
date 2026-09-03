@@ -15,8 +15,10 @@ import { MapChrome } from '../components/MapChrome'
 import { PillFace, PillMarker } from '../components/PillMarker'
 import { pinsForLevel, type MapPin } from '../components/pinModels'
 import { CITIES } from '../data/catalog'
+import { geoBounds } from '../geo/bounds'
 import { catalogCountryCollection } from '../geo/catalogCountries'
 import { layoutPins, type PlacedPin } from '../geo/pinLayout'
+import { countryFeature } from '../geo/worldData'
 import type { MapLevel } from '../types'
 import type { GlobeMapProps } from './globeMapProps'
 
@@ -45,34 +47,85 @@ function angularDistanceDeg(
   return (2 * Math.asin(Math.min(1, Math.sqrt(sine)))) / toRad
 }
 
+const GLOBE_VFOV_DEG = 50
+const COUNTRY_FILL = 0.88
+const COUNTRY_CURVE = 1.5
+const COUNTRY_TOP_CHROME = 48
+
 function altitudeForLevel(level: MapLevel, frameHeight: number) {
   const lift =
     frameHeight > 0 ? Math.min(2.4, Math.max(1, 420 / frameHeight)) : 1
   if (level === 'world') return 2.35
-  if (level === 'country') return 1.4
   if (level === 'poi') return 0.1 * lift
   return 0.13 * lift
+}
+
+function altitudeToFitBounds(
+  bounds: { north: number; south: number; east: number; west: number },
+  frame: { width: number; height: number },
+) {
+  const latSpan = Math.max(0.01, bounds.north - bounds.south)
+  const lngSpan = Math.max(0.01, bounds.east - bounds.west)
+  const midLat = ((bounds.north + bounds.south) / 2) * (Math.PI / 180)
+  const lngSpanAdj = lngSpan * Math.max(0.2, Math.cos(midLat))
+  const width = Math.max(frame.width, 1)
+  const height = Math.max(frame.height - COUNTRY_TOP_CHROME, 1)
+  const vFov = (GLOBE_VFOV_DEG * Math.PI) / 180
+  const hFov = 2 * Math.atan(Math.tan(vFov / 2) * (width / height))
+  const altLat =
+    ((latSpan * Math.PI) / 180 / 2 / Math.tan(vFov / 2)) / COUNTRY_FILL
+  const altLng =
+    ((lngSpanAdj * Math.PI) / 180 / 2 / Math.tan(hFov / 2)) / COUNTRY_FILL
+  return Math.min(
+    0.7,
+    Math.max(0.13, Math.max(altLat, altLng) * COUNTRY_CURVE),
+  )
+}
+
+function countryView(
+  countryId: string,
+  fallback: { lat: number; lng: number },
+  frame: { width: number; height: number },
+) {
+  const feature = countryFeature(countryId)
+  if (!feature) {
+    return {
+      lat: fallback.lat,
+      lng: fallback.lng,
+      altitude: 0.35,
+    }
+  }
+  const bounds = geoBounds(feature.geometry)
+  return {
+    lat: (bounds.north + bounds.south) / 2,
+    lng: (bounds.east + bounds.west) / 2,
+    altitude: altitudeToFitBounds(bounds, frame),
+  }
 }
 
 function viewTarget(
   level: MapLevel,
   pins: MapPin[],
   fallback: { lat: number; lng: number },
+  countryId: string | null,
   cityId: string | null,
-  frameHeight: number,
+  frame: { width: number; height: number },
 ) {
+  if (level === 'country' && countryId) {
+    return countryView(countryId, fallback, frame)
+  }
   if ((level !== 'city' && level !== 'poi') || pins.length === 0) {
     return {
       lat: fallback.lat,
       lng: fallback.lng,
-      altitude: altitudeForLevel(level, frameHeight),
+      altitude: altitudeForLevel(level, frame.height),
     }
   }
   const city = cityId ? CITIES[cityId] : null
   return {
     lat: city?.lat ?? pins.reduce((sum, pin) => sum + pin.lat, 0) / pins.length,
     lng: city?.lng ?? pins.reduce((sum, pin) => sum + pin.lng, 0) / pins.length,
-    altitude: altitudeForLevel(level, frameHeight),
+    altitude: altitudeForLevel(level, frame.height),
   }
 }
 
@@ -111,21 +164,22 @@ function screenCityRings(
 
 function polygonCapColor(feature: object) {
   const properties = (feature as CountryFeature).properties
-  if (properties?.selected) return '#d4c4aa'
-  if (properties?.tier === 0) return '#e6d7c2'
-  if (properties?.tier != null && properties.tier <= 3) return '#ede8de'
-  return 'rgba(237, 232, 222, 0.58)'
+  if (properties?.selected) return 'rgba(255, 248, 230, 0.22)'
+  if (properties?.countryId) return 'rgba(255, 255, 255, 0.04)'
+  return 'rgba(255, 255, 255, 0.01)'
 }
 
 function polygonAltitude(feature: object) {
   const properties = (feature as CountryFeature).properties
-  if (properties?.selected) return 0.016
-  if (properties?.countryId) return 0.007
-  return 0.003
+  if (properties?.selected) return 0.004
+  return 0.001
 }
 
-function polygonStrokeColor() {
-  return '#d3ccbf'
+function polygonStrokeColor(feature: object) {
+  const properties = (feature as CountryFeature).properties
+  if (properties?.selected) return 'rgba(255, 255, 255, 0.55)'
+  if (properties?.countryId) return 'rgba(255, 255, 255, 0.22)'
+  return 'rgba(255, 255, 255, 0.08)'
 }
 
 function GlobeLoadingCover() {
@@ -198,10 +252,18 @@ export default function ReactGlobeMap(props: GlobeMapProps) {
         props.level,
         pins,
         props.camera.center,
+        props.countryId,
         props.cityId,
-        size.height,
+        size,
       ),
-    [pins, props.camera.center, props.cityId, props.level, size.height],
+    [
+      pins,
+      props.camera.center,
+      props.cityId,
+      props.countryId,
+      props.level,
+      size,
+    ],
   )
   const viewRef = useRef(view)
   viewRef.current = view
@@ -430,15 +492,17 @@ export default function ReactGlobeMap(props: GlobeMapProps) {
           ref={globeRef}
           width={size.width}
           height={size.height}
-          backgroundColor="#0d2233"
-          globeImageUrl="/globe-sea.png"
-          atmosphereColor="#7eb8d4"
-          atmosphereAltitude={0.18}
+          backgroundColor="#000000"
+          globeImageUrl="/earth-blue-marble.jpg"
+          bumpImageUrl="/earth-topology.png"
+          backgroundImageUrl="/night-sky.png"
+          atmosphereColor="lightskyblue"
+          atmosphereAltitude={0.15}
           animateIn
-          polygonsData={countries}
+          polygonsData={overlayPins ? [] : countries}
           polygonGeoJsonGeometry="geometry"
           polygonCapColor={polygonCapColor}
-          polygonSideColor={() => 'rgba(13, 34, 51, 0.35)'}
+          polygonSideColor={() => 'rgba(0, 0, 0, 0)'}
           polygonStrokeColor={polygonStrokeColor}
           polygonAltitude={polygonAltitude}
           polygonCapCurvatureResolution={6}
