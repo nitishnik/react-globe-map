@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '../src/homepage-map/tokens.css';
+@import 'mapbox-gl/dist/mapbox-gl.css';
 
 :root {
   color: var(--hm-ink);
